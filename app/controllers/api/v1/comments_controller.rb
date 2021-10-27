@@ -1,9 +1,10 @@
-class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :update, :destroy]
+class Api::V1::CommentsController < Api::V1::BaseController
+  before_action :set_article, only:  %i[index create]
+  before_action :set_comment, only:  %i[show update destroy]
 
   # GET /comments
   def index
-    @comments = Comment.all
+    @comments = @article.comments
 
     render json: @comments
   end
@@ -16,6 +17,7 @@ class CommentsController < ApplicationController
   # POST /comments
   def create
     @comment = Comment.new(comment_params)
+    @comment.article = @article
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -44,6 +46,9 @@ class CommentsController < ApplicationController
       @comment = Comment.find(params[:id])
     end
 
+  def set_article
+    @article = Article.find(params[:article_id])
+  end
     # Only allow a list of trusted parameters through.
     def comment_params
       params.require(:comment).permit(:body)
