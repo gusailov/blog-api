@@ -4,7 +4,7 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # GET /articles
   def index
-    @articles = Article.ordered
+    @articles = Article.all
 
     render json: @articles, each_serializer: ArticlesSerializer
   end
