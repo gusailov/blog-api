@@ -4,9 +4,9 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # GET /articles
   def index
-    @articles = Article.all
+    @articles = Article.ordered
 
-    render json: @articles
+    render json: @articles, each_serializer: ArticlesSerializer
   end
 
   # GET /articles/1
