@@ -1,5 +1,5 @@
 class Api::V1::ArticlesController < Api::V1::BaseController
-  before_action :authenticate_api_v1_user!, except: :index
+  before_action :authenticate_user!, except: :index
   before_action :set_article, only: [:show, :update, :destroy]
 
   # GET /articles
@@ -16,7 +16,7 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # POST /articles
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.new(article_params)
 
     if @article.save
       render json: @article, status: :created, location: @article
@@ -40,13 +40,14 @@ class Api::V1::ArticlesController < Api::V1::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def article_params
-      params.require(:article).permit(:title, :body)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def article_params
+    params.require(:article).permit(:title, :body)
+  end
 end

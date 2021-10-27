@@ -1,6 +1,7 @@
 class Api::V1::CommentsController < Api::V1::BaseController
-  before_action :set_article, only:  %i[index create]
-  before_action :set_comment, only:  %i[show update destroy]
+  before_action :authenticate_user!, except: :index
+  before_action :set_article, only: %i[index create]
+  before_action :set_comment, only: %i[show update destroy]
 
   # GET /comments
   def index
@@ -16,7 +17,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
+    @comment = current_user.comments.new(comment_params)
     @comment.article = @article
 
     if @comment.save
@@ -41,16 +42,18 @@ class Api::V1::CommentsController < Api::V1::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def set_article
     @article = Article.find(params[:article_id])
   end
-    # Only allow a list of trusted parameters through.
-    def comment_params
-      params.require(:comment).permit(:body)
-    end
+
+  # Only allow a list of trusted parameters through.
+  def comment_params
+    params.require(:comment).permit(:body)
+  end
 end
