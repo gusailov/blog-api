@@ -6,5 +6,5 @@ class Article < ApplicationRecord
   validates :title, length: { maximum: 100 }
 
   enum category: %i[common sport music]
-  default_scope { order(created_at: :asc) }
+  default_scope { order(created_at: :desc) }
 end
