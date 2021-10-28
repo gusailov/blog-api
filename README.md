@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+GET api/v1/articles - возможность получить список всех статей отсортированный по дате
 
-Things you may want to cover:
+GET api/v1/articles/:id - возможность запросить конкретную статью
 
-* Ruby version
+POST api/v1/articles - создание статьи
 
-* System dependencies
+DELETE /api/v1/articles/:id - удаление статьи
 
-* Configuration
+GET /api/v1/categories/:id - статьи по категории (:id - id категории)
 
-* Database creation
+GET /api/v1/users/:id - статьи пользоватея (:id - id пользователя)
 
-* Database initialization
+GET api/v1/articles/:article_id/comments - возможность получить комментарии к определенной статье
 
-* How to run the test suite
+POST api/v1/articles/:article_id/comments - оставить комментарий к статье
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+DELETE /api/v1/comments/:id - удалить комментарий его автору (:id - id комментария)
