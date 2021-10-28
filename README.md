@@ -11,8 +11,13 @@ POST /auth/sign_in body: {
 "password":"12345678"
 } - аутентифицирует пользователя
 
-для следующих запросов требующих аутентификацию и авторизацию headers:{access-token:..., client:..., uid:user@mail.com}
+COPY response headers:{access-token:..., client:..., uid:user@mail.com}
 
+для следующих запросов требующих аутентификацию и авторизацию
+
+PASTE headers:{access-token:..., client:..., uid:user@mail.com}
+
+--------------------------
 GET api/v1/articles - возможность получить список всех статей отсортированный по дате
 
 GET api/v1/articles/:id - возможность запросить конкретную статью
