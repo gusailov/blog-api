@@ -1,4 +1,5 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_category, only: [:show, :update, :destroy]
 
   # GET /categories
