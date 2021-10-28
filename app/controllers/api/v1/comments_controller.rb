@@ -15,7 +15,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     render json: @comment
   end
 
-  # POST /comments
+  # POST articles/:article_id/comments
   def create
     @comment = current_user.comments.new(comment_params)
     @comment.article = @article
