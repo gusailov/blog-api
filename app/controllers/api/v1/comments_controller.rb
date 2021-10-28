@@ -1,7 +1,7 @@
 class Api::V1::CommentsController < Api::V1::BaseController
   before_action :authenticate_user!, except: :index
   before_action :set_article, only: %i[index create]
-  before_action :set_comment, only: %i[show update destroy]
+  load_and_authorize_resource class: "Comment"
 
   # GET /comments
   def index
@@ -42,11 +42,6 @@ class Api::V1::CommentsController < Api::V1::BaseController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
 
   def set_article
     @article = Article.find(params[:article_id])

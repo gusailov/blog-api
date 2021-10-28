@@ -1,6 +1,6 @@
 class Api::V1::ArticlesController < Api::V1::BaseController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_article, only: [:show, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /articles
   def index
@@ -40,11 +40,6 @@ class Api::V1::ArticlesController < Api::V1::BaseController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_article
-    @article = Article.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def article_params
