@@ -48,6 +48,6 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # Only allow a list of trusted parameters through.
   def article_params
-    params.require(:article).permit(:title, :body, :category)
+    params.require(:article).permit(:title, :body, :category_id)
   end
 end
