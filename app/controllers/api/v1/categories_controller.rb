@@ -1,6 +1,7 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_category, only: [:show, :update, :destroy]
+  load_and_authorize_resource class: "Category"
 
   # GET /categories
   def index

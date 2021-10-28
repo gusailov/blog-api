@@ -9,7 +9,7 @@ class Ability
     alias_action :update, :destroy, to: :modify
 
     if user
-      user_abilities
+      user.email == 'admin@mail.com' ? admin_abilities : user_abilities
     else
       guest_abilities
     end
@@ -17,6 +17,10 @@ class Ability
 
   def guest_abilities
     can :read, :all
+  end
+
+  def admin_abilities
+    can :manage, :all
   end
 
   def user_abilities
