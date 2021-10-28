@@ -23,6 +23,6 @@ class Ability
     guest_abilities
     can :create, [Article, Comment]
 
-    can :modify, [Article, Comment], id: user.id
+    can :modify, [Article, Comment], user_id: user.id
   end
 end

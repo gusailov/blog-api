@@ -1,6 +1,6 @@
 class Api::V1::ArticlesController < Api::V1::BaseController
   before_action :authenticate_user!, except: %i[index show]
-  load_and_authorize_resource
+  load_and_authorize_resource class: "Article"
 
   # GET /articles
   def index
