@@ -7,12 +7,25 @@ Rails.application.routes.draw do
   end
 
   resources :categories
-  
+
   namespace :api do
     namespace :v1 do
       resources :users, only: %i[show]
       resources :categories
-      resources :articles, shallow: true do
+
+      scope module: :users do
+        resources :users, only: %i[] do
+          resources :articles, only: %i[index]
+        end
+      end
+
+      scope module: :categories do
+        resources :categories, only: %i[] do
+          resources :articles, only: %i[index]
+        end
+      end
+
+      resources :articles do
         resources :comments
       end
     end
