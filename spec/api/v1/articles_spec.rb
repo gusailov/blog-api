@@ -131,24 +131,8 @@ describe 'Articles API', type: :request do
     end
   end
 
-  describe 'GET /api/v1/categories/:id' do
-    let(:api_path) { "/api/v1/categories/#{category.id}" }
-    let!(:articles) { create_list(:article, 3, user: user, category: category) }
-    before { get api_path, headers: headers }
-
-    it_behaves_like 'status 200'
-
-    it 'returns list of articles of category' do
-      expect(json['category']['articles'].size).to eq 3
-    end
-
-    it 'returns specific category' do
-      expect(json['category']['id']).to eq category.id
-    end
-  end
-
-  describe 'GET /api/v1/users/:id' do
-    let(:api_path) { "/api/v1/users/#{user.id}" }
+  describe 'GET /api/v1/categories/:category_id/articles' do
+    let(:api_path) { "/api/v1/categories/#{category.id}/articles" }
     let!(:articles) { create_list(:article, 3, user: user, category: category) }
     before { get api_path, headers: headers }
 
@@ -157,6 +141,21 @@ describe 'Articles API', type: :request do
     it 'returns list of articles of category' do
       expect(json['articles'].size).to eq 3
     end
+
+    it 'returns specific category' do
+      expect(json['articles'].first['category']['id']).to eq category.id
+    end
   end
 
+  describe 'GET /api/v1/users/:user_id/articles' do
+    let(:api_path) { "/api/v1/users/#{user.id}/articles" }
+    let!(:articles) { create_list(:article, 3, user: user, category: category) }
+    before { get api_path, headers: headers }
+
+    it_behaves_like 'status 200'
+
+    it 'returns list of articles of user' do
+      expect(json['articles'].size).to eq 3
+    end
+  end
 end

@@ -26,9 +26,9 @@ POST api/v1/articles - создание статьи
 
 DELETE /api/v1/articles/:id - удаление статьи
 
-GET /api/v1/categories/:id - статьи по категории (:id - id категории)
+GET /api/v1/categories/:category_id/articles - статьи по категории (:category_id - id категории)
 
-GET /api/v1/users/:id - статьи пользоватея (:id - id пользователя)
+GET /api/v1/users/:user_id/articles - статьи пользоватея (:user_id- id пользователя)
 
 GET api/v1/articles/:article_id/comments - возможность получить комментарии к определенной статье
 
