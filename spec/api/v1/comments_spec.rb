@@ -5,9 +5,10 @@ describe 'Comments API', type: :request do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
   let(:article) { create(:article, user: user, category: category) }
+  create_comments_count = 2
 
   describe 'GET api/v1/articles/:article_id/comments' do
-    let!(:comments) { create_list(:comment, 3, user: user, article: article) }
+    let!(:comments) { create_list(:comment, create_comments_count, user: user, article: article) }
     let(:comment) { comments.first }
     let(:comment_response) { json['comments'].first }
 
@@ -16,7 +17,7 @@ describe 'Comments API', type: :request do
     it_behaves_like 'status 200'
 
     it 'returns list of comments' do
-      expect(json['comments'].size).to eq 3
+      expect(json['comments'].size).to eq create_comments_count
     end
 
     it ' returns all public fields ' do

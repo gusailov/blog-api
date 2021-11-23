@@ -4,9 +4,10 @@ describe 'Articles API', type: :request do
   let(:headers) { { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' } }
   let(:user) { create(:user) }
   let(:category) { create(:category) }
+  created_article_count = 2
 
   describe 'GET api/v1/articles' do
-    let!(:articles) { create_list(:article, 2, user: user, category: category) }
+    let!(:articles) { create_list(:article, created_article_count, user: user, category: category) }
     let(:article) { articles.first }
     let(:article_response) { json['articles'].last }
 
@@ -15,7 +16,7 @@ describe 'Articles API', type: :request do
     it_behaves_like 'status 200'
 
     it 'returns list of articles' do
-      expect(json['articles'].size).to eq 2
+      expect(json['articles'].size).to eq created_article_count
     end
 
     it 'returns all public fields' do
@@ -36,7 +37,8 @@ describe 'Articles API', type: :request do
   describe 'GET api/v1/articles/:id' do
     let(:article) { create(:article, user: user, category: category) }
     let(:article_response) { json['article'] }
-    let!(:comments) { create_list(:comment, 2, user: user, article: article) }
+    create_comments_count = 2
+    let!(:comments) { create_list(:comment, create_comments_count, user: user, article: article) }
 
     before { get api_v1_article_path(article), headers: headers }
 
@@ -49,7 +51,7 @@ describe 'Articles API', type: :request do
     end
 
     it 'contains article comments' do
-      expect(article_response['comments'].size).to eq 2
+      expect(article_response['comments'].size).to eq create_comments_count
     end
 
     it 'contains category object' do
@@ -130,13 +132,13 @@ describe 'Articles API', type: :request do
   end
 
   describe 'GET /api/v1/categories/:category_id/articles' do
-    let!(:articles) { create_list(:article, 3, user: user, category: category) }
+    let!(:articles) { create_list(:article, created_article_count, user: user, category: category) }
     before { get api_v1_category_articles_path(category), headers: headers }
 
     it_behaves_like 'status 200'
 
     it 'returns list of articles of category' do
-      expect(json['articles'].size).to eq 3
+      expect(json['articles'].size).to eq created_article_count
     end
 
     it 'returns specific category' do
@@ -145,13 +147,13 @@ describe 'Articles API', type: :request do
   end
 
   describe 'GET /api/v1/users/:user_id/articles' do
-    let!(:articles) { create_list(:article, 3, user: user, category: category) }
+    let!(:articles) { create_list(:article, created_article_count, user: user, category: category) }
     before { get api_v1_user_articles_path(user), headers: headers }
 
     it_behaves_like 'status 200'
 
     it 'returns list of articles of user' do
-      expect(json['articles'].size).to eq 3
+      expect(json['articles'].size).to eq created_article_count
     end
   end
 end
