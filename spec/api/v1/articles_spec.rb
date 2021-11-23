@@ -6,12 +6,11 @@ describe 'Articles API', type: :request do
   let(:category) { create(:category) }
 
   describe 'GET api/v1/articles' do
-    let(:api_path) { '/api/v1/articles' }
     let!(:articles) { create_list(:article, 2, user: user, category: category) }
     let(:article) { articles.first }
     let(:article_response) { json['articles'].last }
 
-    before { get api_path, headers: headers }
+    before { get api_v1_articles_path, headers: headers }
 
     it_behaves_like 'status 200'
 
@@ -35,12 +34,11 @@ describe 'Articles API', type: :request do
   end
 
   describe 'GET api/v1/articles/:id' do
-    let!(:article) { create(:article, user: user, category: category) }
-    let(:api_path) { "/api/v1/articles/#{article.id}" }
+    let(:article) { create(:article, user: user, category: category) }
     let(:article_response) { json['article'] }
     let!(:comments) { create_list(:comment, 2, user: user, article: article) }
 
-    before { get api_path, headers: headers }
+    before { get api_v1_article_path(article), headers: headers }
 
     it_behaves_like 'status 200'
 
@@ -61,7 +59,7 @@ describe 'Articles API', type: :request do
 
   describe "POST api/v1/articles" do
     let(:headers) { { 'ACCEPT' => 'application/json' } }
-    let(:api_path) { '/api/v1/articles' }
+    let(:api_path) { api_v1_articles_path }
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :post }
@@ -93,7 +91,7 @@ describe 'Articles API', type: :request do
   describe 'DELETE /api/v1/articles/:id' do
     let!(:article) { create(:article, user: user, category: category) }
     let(:headers) { { 'ACCEPT' => 'application/json' } }
-    let(:api_path) { "/api/v1/articles/#{article.id}" }
+    let(:api_path) { api_v1_article_path(article) }
 
     it_behaves_like 'API Authorizable' do
       let(:method) { :delete }
@@ -132,9 +130,8 @@ describe 'Articles API', type: :request do
   end
 
   describe 'GET /api/v1/categories/:category_id/articles' do
-    let(:api_path) { "/api/v1/categories/#{category.id}/articles" }
     let!(:articles) { create_list(:article, 3, user: user, category: category) }
-    before { get api_path, headers: headers }
+    before { get api_v1_category_articles_path(category), headers: headers }
 
     it_behaves_like 'status 200'
 
@@ -148,9 +145,8 @@ describe 'Articles API', type: :request do
   end
 
   describe 'GET /api/v1/users/:user_id/articles' do
-    let(:api_path) { "/api/v1/users/#{user.id}/articles" }
     let!(:articles) { create_list(:article, 3, user: user, category: category) }
-    before { get api_path, headers: headers }
+    before { get api_v1_user_articles_path(user), headers: headers }
 
     it_behaves_like 'status 200'
 
