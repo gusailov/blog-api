@@ -5,6 +5,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # GET /categories
   def index
+    # TODO: don't use instance variables if you don't need them
     @categories = Category.all
 
     render json: @categories
@@ -12,11 +13,14 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # GET /categories/1
   def show
+    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
+
     render json: @category
   end
 
   # POST /categories
   def create
+    # TODO: don't use instance variables if you don't need them
     @category = Category.new(category_params)
 
     if @category.save
@@ -28,6 +32,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # PATCH/PUT /categories/1
   def update
+    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
     if @category.update(category_params)
       render json: @category
     else
@@ -37,18 +42,21 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # DELETE /categories/1
   def destroy
+    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
     @category.destroy
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
+  # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
   def set_category
     @category = Category.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def category_params
+    # TODO: Remove top-level require, use only .permit(:....)
     params.require(:category).permit(:name)
   end
 end

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  # TODO: remove validations when you will start using FormObjects
   has_many :comments, dependent: :destroy
   has_many :articles, dependent: :destroy
 end

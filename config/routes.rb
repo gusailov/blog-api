@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         end
       end
 
+      # TODO: remove shallow here
       resources :articles, shallow: true do
         resources :comments
       end

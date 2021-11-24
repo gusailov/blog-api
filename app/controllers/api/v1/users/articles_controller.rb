@@ -4,6 +4,8 @@ module Api
     module Users
       class ArticlesController < BaseController
         def index
+          # TODO: Add a query-object that will filter Article by: date (assume the date is in ISO8601), by title (must be able to find
+          # article even by a part of it's title)
           user = User.find(params[:user_id])
 
           render json: user.articles, each_serializer: ArticlesSerializer

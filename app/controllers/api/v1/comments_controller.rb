@@ -49,6 +49,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   # Only allow a list of trusted parameters through.
   def comment_params
+    # TODO: Remove top-level require, use only .permit(:....)
     params.require(:comment).permit(:body)
   end
 end
