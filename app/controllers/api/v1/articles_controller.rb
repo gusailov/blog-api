@@ -4,9 +4,9 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # GET /articles
   def index
-    @articles = Article.all
+    articles = Article.all
 
-    render json: @articles, each_serializer: ArticlesSerializer
+    render json: articles, each_serializer: ArticlesSerializer
   end
 
   # GET /articles/1
@@ -16,12 +16,12 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # POST /articles
   def create
-    @article = current_user.articles.new(article_params)
+    article = current_user.articles.new(article_params)
 
-    if @article.save
-      render json: @article, status: :created
+    if article.save
+      render json: article, status: :created
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: { errors: article.errors }, status: :unprocessable_entity
     end
   end
 
@@ -30,13 +30,15 @@ class Api::V1::ArticlesController < Api::V1::BaseController
     if @article.update(article_params)
       render json: @article
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: { errors: @article.errors }, status: :unprocessable_entity
     end
   end
 
   # DELETE /articles/1
   def destroy
     @article.destroy
+
+    head :no_content
   end
 
   private
