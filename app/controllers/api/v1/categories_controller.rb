@@ -1,58 +1,54 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_category, only: [:show, :update, :destroy]
-  load_and_authorize_resource class: "Category"
 
   # GET /categories
   def index
-    # TODO: don't use instance variables if you don't need them
-    @categories = Category.all
+    categories = Category.all.page(params[:page]).per(params[:per])
 
-    render json: @categories
+    render json: categories, each_serializer: CategorySerializer
   end
 
   # GET /categories/1
   def show
-    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
+    category = Category.find(params[:id])
 
-    render json: @category
+    render json: category, serializer: CategorySerializer
   end
 
   # POST /categories
   def create
-    # TODO: don't use instance variables if you don't need them
-    @category = Category.new(category_params)
+    category = Category.new(category_params)
+    authorize category
 
-    if @category.save
-      render json: @category, status: :created
+    if category.save
+      render json: category, status: :created, serializer: CategorySerializer
     else
-      render json: @category.errors, status: :unprocessable_entity
+      render json: { errors: category.errors }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /categories/1
   def update
-    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
-    if @category.update(category_params)
-      render json: @category
+    category = Category.find(params[:id])
+    authorize category
+
+    if category.update(category_params)
+      render json: category, serializer: CategorySerializer
     else
-      render json: @category.errors, status: :unprocessable_entity
+      render json: { errors: category.errors }, status: :unprocessable_entity
     end
   end
 
   # DELETE /categories/1
   def destroy
-    # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
-    @category.destroy
+    category = Category.find(params[:id])
+    authorize category
+
+    category.destroy
+    head :no_content
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  # TODO: user Category.find(params[:id]) instead of auto-finders from cancancan or before_actions
-  def set_category
-    @category = Category.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def category_params

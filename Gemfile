@@ -31,9 +31,9 @@ gem 'devise_token_auth'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
-gem 'oj'
+gem "pundit"
 
-gem 'cancancan'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -41,6 +41,7 @@ group :development, :test do
 
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'ffaker'
 end
 
 group :development do

@@ -1,4 +1,7 @@
 class CommentSerializer < ActiveModel::Serializer
-  # TODO: if you serializer a date/datetime - use iso8601 format please
-  attributes :id, :user_id, :body, :created_at
+  attributes :id, :user_id, :article_id, :body, :created_at
+
+  def created_at
+    object.created_at.iso8601
+  end
 end

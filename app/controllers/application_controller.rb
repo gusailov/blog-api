@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include Pundit
 
-  rescue_from CanCan::AccessDenied do |exception|
-    render json: exception.message, status: 403
+  rescue_from Pundit::NotAuthorizedError do
+    head :forbidden
   end
 end

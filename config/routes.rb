@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: %i[show]
       resources :categories
 
       scope module: :users do
@@ -19,8 +18,7 @@ Rails.application.routes.draw do
         end
       end
 
-      # TODO: remove shallow here
-      resources :articles, shallow: true do
+      resources :articles do
         resources :comments
       end
     end

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  enum role: { admin: 0, user: 1 }
+
   # TODO: remove validations when you will start using FormObjects
   has_many :comments, dependent: :destroy
   has_many :articles, dependent: :destroy

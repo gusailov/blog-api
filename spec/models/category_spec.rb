@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Category, type: :model do
   describe 'Fields' do
     it { is_expected.to have_db_column(:id).of_type(:integer) }
@@ -17,7 +15,7 @@ RSpec.describe Category, type: :model do
 
   describe 'Validations' do
     subject { Category.new(name: "something") }
-    
+
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_uniqueness_of(:name) }
   end
