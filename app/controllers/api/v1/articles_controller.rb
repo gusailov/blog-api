@@ -3,8 +3,8 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # GET /articles
   def index
-    # TODO: Add a query-object that will filter Article by: date (assume the date is in ISO8601), by title (must be able to find
-    articles = Article.order(created_at: :desc).page(params[:page]).per(params[:per])
+    filtered_articles = ArticleFilter.new(Article.all).call(filter_params)
+    articles = filtered_articles.order(created_at: :desc).page(params[:page]).per(params[:per])
 
     render json: articles, each_serializer: ArticlesSerializer
   end
@@ -55,5 +55,9 @@ class Api::V1::ArticlesController < Api::V1::BaseController
   def article_params
     # TODO: don't use require, just use permit(:...)
     params.require(:article).permit(:title, :body, :category_id)
+  end
+
+  def filter_params
+    params.permit(:search, :date)
   end
 end
