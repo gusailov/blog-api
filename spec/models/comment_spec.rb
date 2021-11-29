@@ -1,4 +1,8 @@
 RSpec.describe Comment, type: :model do
+  describe 'Constants' do
+    it { expect(described_class::MAX_BODY_LENGTH).to eq(1000) }
+  end
+
   describe 'Fields' do
     it { is_expected.to have_db_column(:id).of_type(:integer) }
     it { is_expected.to have_db_column(:body).of_type(:text) }
@@ -15,10 +19,5 @@ RSpec.describe Comment, type: :model do
   describe 'Associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:article) }
-  end
-
-  describe 'Validations' do
-    it { is_expected.to validate_presence_of :body }
-    it { is_expected.to validate_length_of(:body).is_at_most(1000) }
   end
 end

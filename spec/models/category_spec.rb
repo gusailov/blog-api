@@ -12,11 +12,4 @@ RSpec.describe Category, type: :model do
   describe 'Associations' do
     it { is_expected.to have_many(:articles).dependent(:destroy) }
   end
-
-  describe 'Validations' do
-    subject { Category.new(name: "something") }
-
-    it { is_expected.to validate_presence_of :name }
-    it { is_expected.to validate_uniqueness_of(:name) }
-  end
 end

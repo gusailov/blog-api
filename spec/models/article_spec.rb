@@ -1,4 +1,9 @@
 RSpec.describe Article, type: :model do
+  describe 'Constants' do
+    it { expect(described_class::MAX_TITLE_LENGTH).to eq(100) }
+    it { expect(described_class::MAX_BODY_LENGTH).to eq(50000) }
+  end
+
   describe 'Fields' do
     it { is_expected.to have_db_column(:id).of_type(:integer) }
     it { is_expected.to have_db_column(:title).of_type(:string).with_options(limit: 100) }
@@ -17,11 +22,5 @@ RSpec.describe Article, type: :model do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:category) }
     it { is_expected.to have_many(:comments).dependent(:destroy) }
-  end
-
-  describe 'Validations' do
-    it { is_expected.to validate_presence_of :title }
-    it { is_expected.to validate_presence_of :body }
-    it { is_expected.to validate_length_of(:title).is_at_most(100) }
   end
 end

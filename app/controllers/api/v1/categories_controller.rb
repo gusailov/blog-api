@@ -17,13 +17,14 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # POST /categories
   def create
-    category = Category.new(category_params)
-    authorize category
+    authorize Category
 
-    if category.save
-      render json: category, status: :created, serializer: CategorySerializer
+    form = CategoriesCreateForm.new(category_params)
+
+    if form.save
+      render json: form.model, status: :created, serializer: CategorySerializer
     else
-      render json: { errors: category.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -32,10 +33,12 @@ class Api::V1::CategoriesController < Api::V1::BaseController
     category = Category.find(params[:id])
     authorize category
 
-    if category.update(category_params)
-      render json: category, serializer: CategorySerializer
+    form = CategoriesUpdateForm.new(category, category_params)
+
+    if form.save
+      render json: form.model, serializer: CategorySerializer
     else
-      render json: { errors: category.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -52,7 +55,6 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
   # Only allow a list of trusted parameters through.
   def category_params
-    # TODO: Remove top-level require, use only .permit(:....)
-    params.require(:category).permit(:name)
+    params.permit(:name)
   end
 end

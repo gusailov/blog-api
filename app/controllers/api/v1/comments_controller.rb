@@ -11,14 +11,14 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   # POST articles/:article_id/comments
   def create
-    article = Article.find(params[:article_id])
-    comment = current_user.comments.new(comment_params)
-    comment.article = article
+    authorize Comment
 
-    if comment.save
-      render json: comment, status: :created, serializer: CommentSerializer
+    form = CommentCreateForm.new(comment_params.merge({ user_id: current_user.id, article_id: params[:article_id] }))
+
+    if form.save
+      render json: form.model, status: :created, serializer: CommentSerializer
     else
-      render json: { errors: comment.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -28,10 +28,12 @@ class Api::V1::CommentsController < Api::V1::BaseController
     comment = article.comments.find(params[:id])
     authorize comment
 
-    if comment.update(comment_params)
-      render json: comment, serializer: CommentSerializer
+    form = CommentUpdateForm.new(comment, comment_params)
+
+    if form.save
+      render json: form.model, serializer: CommentSerializer
     else
-      render json: { errors: comment.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -49,7 +51,6 @@ class Api::V1::CommentsController < Api::V1::BaseController
 
   # Only allow a list of trusted parameters through.
   def comment_params
-    # TODO: Remove top-level require, use only .permit(:....)
-    params.require(:comment).permit(:body)
+    params.permit(:body)
   end
 end

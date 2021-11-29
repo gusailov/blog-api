@@ -62,9 +62,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       let(:category_name) { FFaker::Book.title }
       let(:params) do
         {
-          category: {
-            name: category_name
-          }
+          name: category_name
         }
       end
 
@@ -88,25 +86,19 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       let(:category_name) { FFaker::Book.title }
       let(:params) do
         {
-          category: {
-            name: category_name
-          }
+          name: category_name
         }
       end
 
       let(:invalid_params) do
         {
-          category: {
-            name: ""
-          }
+          name: ""
         }
       end
 
       let(:duplicate_params) do
         {
-          category: {
-            name: category.name
-          }
+          name: category.name
         }
       end
 
@@ -152,9 +144,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       let(:params) do
         {
           id: category.id,
-          category: {
-            name: new_category_name
-          }
+          name: new_category_name
         }
       end
 
@@ -176,9 +166,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       let(:params) do
         {
           id: category.id,
-          category: {
-            name: new_category_name
-          }
+          name: new_category_name
         }
       end
 
@@ -191,9 +179,7 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       let(:invalid_params) do
         {
           id: category.id,
-          category: {
-            name: ""
-          }
+          name: ""
         }
       end
 

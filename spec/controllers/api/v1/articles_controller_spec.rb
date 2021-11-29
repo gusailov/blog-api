@@ -67,11 +67,9 @@ RSpec.describe Api::V1::ArticlesController, type: :controller do
       let!(:article) { create(:article, user: user, category: category) }
       let(:params) do
         {
-          article: {
-            title: article.title,
-            category_id: category.id,
-            body: article.body
-          }
+          title: article.title,
+          category_id: category.id,
+          body: article.body
         }
       end
 
@@ -138,11 +136,9 @@ RSpec.describe Api::V1::ArticlesController, type: :controller do
       let(:params) do
         {
           id: article_1.id,
-          article: {
-            title: article_2.title,
-            category_id: category.id,
-            body: article_2.body
-          }
+          title: article_2.title,
+          category_id: category.id,
+          body: article_2.body
         }
       end
 
@@ -165,11 +161,9 @@ RSpec.describe Api::V1::ArticlesController, type: :controller do
       let(:params) do
         {
           id: article.id,
-          article: {
-            title: article.title,
-            category_id: category.id,
-            body: article.body
-          }
+          title: article.title,
+          category_id: category.id,
+          body: article.body
         }
       end
 
@@ -182,11 +176,9 @@ RSpec.describe Api::V1::ArticlesController, type: :controller do
       let(:invalid_params) do
         {
           id: article.id,
-          article: {
-            title: "",
-            category_id: "",
-            body: ""
-          }
+          title: "",
+          category_id: "",
+          body: ""
         }
       end
 

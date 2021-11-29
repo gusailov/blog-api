@@ -17,14 +17,14 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # POST /articles
   def create
-    # TODO: use form object instead of model validations
-    article = current_user.articles.new(article_params)
-    authorize article
+    authorize Article
 
-    if article.save
-      render json: article, status: :created, serializer: ArticleSerializer
+    form = ArticleCreateForm.new(article_params.merge({ user_id: current_user.id }))
+
+    if form.save
+      render json: form.model, status: :created, serializer: ArticleSerializer
     else
-      render json: { errors: article.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -33,10 +33,12 @@ class Api::V1::ArticlesController < Api::V1::BaseController
     article = Article.find(params[:id])
     authorize article
 
-    if article.update(article_params)
-      render json: article, serializer: ArticleSerializer
+    form = ArticleUpdateForm.new(article, article_params)
+
+    if form.save
+      render json: form.model, serializer: ArticleSerializer
     else
-      render json: { errors: article.errors }, status: :unprocessable_entity
+      render json: { errors: form.errors }, status: :unprocessable_entity
     end
   end
 
@@ -53,8 +55,7 @@ class Api::V1::ArticlesController < Api::V1::BaseController
 
   # Only allow a list of trusted parameters through.
   def article_params
-    # TODO: don't use require, just use permit(:...)
-    params.require(:article).permit(:title, :body, :category_id)
+    params.permit(:title, :body, :category_id)
   end
 
   def filter_params

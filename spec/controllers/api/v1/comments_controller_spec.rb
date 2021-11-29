@@ -32,9 +32,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       let(:params) do
         {
           article_id: article.id,
-          comment: {
-            body: comment.body
-          }
+          body: comment.body
         }
       end
 
@@ -59,18 +57,14 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       let(:params) do
         {
           article_id: article.id,
-          comment: {
-            body: comment.body
-          }
+          body: comment.body
         }
       end
 
       let(:invalid_params) do
         {
           article_id: article.id,
-          comment: {
-            body: ""
-          }
+          body: ""
         }
       end
 
@@ -99,9 +93,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         {
           article_id: article.id,
           id: comment.id,
-          comment: {
-            body: new_comment_name
-          }
+          body: new_comment_name
         }
       end
       it 'updates and returns a new Comment params' do
@@ -123,9 +115,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         {
           article_id: article.id,
           id: comment.id,
-          comment: {
-            body: new_comment_name
-          }
+          body: new_comment_name
         }
       end
 
@@ -140,9 +130,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         {
           article_id: article.id,
           id: comment.id,
-          comment: {
-            body: ""
-          }
+          body: ""
         }
       end
 
