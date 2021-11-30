@@ -1,7 +1,7 @@
 class CategoriesCreateForm < BaseForm
   include ActiveModel::Model
 
-  attr_accessor :name
+  # attr_accessor :name
 
   validates :name, presence: true
   validate :name_is_unique?

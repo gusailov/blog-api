@@ -1,32 +1,19 @@
 class ArticleUpdateForm < BaseForm
-  include ActiveModel::Model
+  # :title, :body, :category_id, :article_id
 
-  attr_accessor :title, :body, :category_id, :article_id
-  
   def initialize(model, params)
     @model = model
+    model_attributes = model.attributes.symbolize_keys.slice(:title, :body, :category_id, :article_id)
 
-    super(@model.attributes.slice('title', 'body', 'category_id'))
-    assign_attributes(params.except(:id))
-  end
+    super(model_attributes.merge(params))
 
-  def valid?
-    contract = ArticleUpdateContract.new
-    result = contract.call(title: title, category_id: category_id, body: body)
-
-    if result.success?
-      @validated_params = result.values.data
-      true
-    else
-      @errors = result.errors.to_h
-      false
-    end
+    @contract = ArticleUpdateContract.new
   end
 
   private
 
   def persist!
-    @model.update!(title: title, category_id: category_id, body: body)
+    @model.update!(validated_params)
     @model
   end
 end
