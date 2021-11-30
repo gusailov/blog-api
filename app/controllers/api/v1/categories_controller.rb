@@ -19,7 +19,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   def create
     authorize Category
 
-    form = CategoriesCreateForm.new(category_params)
+    form = CategoriesCreateForm.new(category_params.to_unsafe_hash)
 
     if form.save
       render json: form.model, status: :created, serializer: CategorySerializer
