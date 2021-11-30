@@ -8,7 +8,7 @@ RSpec.describe ArticleUpdateForm do
 
   let(:new_category_id) { category_2.id }
   let(:new_title) { FFaker::Book.title }
-  let(:new_body) { FFaker::Lorem.sentences.join(' ') }
+  let(:new_body) { FFaker::Lorem.characters }
 
   let(:attributes) do
     {
@@ -53,7 +53,7 @@ RSpec.describe ArticleUpdateForm do
       end
 
       context 'when title is too long' do
-        let(:new_title) { SecureRandom.alphanumeric(200) }
+        let(:new_title) { FFaker::Lorem.characters(Article::MAX_TITLE_LENGTH + 1) }
         let(:expected_error_messages) { { title: ["is too long (maximum is 100 characters)"] } }
 
         include_examples 'has validation errors'
@@ -69,7 +69,7 @@ RSpec.describe ArticleUpdateForm do
       end
 
       context 'when body is too long' do
-        let(:new_body) { SecureRandom.alphanumeric(60000) }
+        let(:new_body) { FFaker::Lorem.characters(Article::MAX_BODY_LENGTH + 1) }
         let(:expected_error_messages) { { body: ["is too long (maximum is 50000 characters)"] } }
 
         include_examples 'has validation errors'

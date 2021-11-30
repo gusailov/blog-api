@@ -5,7 +5,7 @@ class ArticleCreateForm < BaseForm
   attr_reader :model
 
   validates :title, presence: true, length: { maximum: Article::MAX_TITLE_LENGTH }
-  validates :body, presence: true
+  validates :body, presence: true, length: { maximum: Article::MAX_BODY_LENGTH }
   validates :category_id, presence: true
   validates :user_id, presence: true
 

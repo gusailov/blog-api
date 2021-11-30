@@ -5,7 +5,7 @@ RSpec.describe CommentCreateForm do
   let(:article) { create(:article, user: user) }
   let(:user_id) { user.id }
   let(:article_id) { article.id }
-  let(:body) { FFaker::Lorem.sentences.join(' ') }
+  let(:body) { FFaker::Lorem.characters }
 
   let(:attributes) do
     {
@@ -56,7 +56,7 @@ RSpec.describe CommentCreateForm do
       end
 
       context 'when title is too long' do
-        let(:body) { SecureRandom.alphanumeric(1002) }
+        let(:body) { FFaker::Lorem.characters(Comment::MAX_BODY_LENGTH + 1) }
         let(:expected_error_messages) { { body: ["is too long (maximum is 1000 characters)"] } }
 
         include_examples 'has validation errors'

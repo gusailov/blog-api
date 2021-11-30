@@ -13,7 +13,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
   def create
     authorize Comment
 
-    form = CommentCreateForm.new(comment_params.merge({ user_id: current_user.id, article_id: params[:article_id] }))
+    form = CommentCreateForm.new(comment_create_params.merge(user_id: current_user.id))
 
     if form.save
       render json: form.model, status: :created, serializer: CommentSerializer
@@ -28,7 +28,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     comment = article.comments.find(params[:id])
     authorize comment
 
-    form = CommentUpdateForm.new(comment, comment_params)
+    form = CommentUpdateForm.new(comment, comment_update_params)
 
     if form.save
       render json: form.model, serializer: CommentSerializer
@@ -50,7 +50,11 @@ class Api::V1::CommentsController < Api::V1::BaseController
   private
 
   # Only allow a list of trusted parameters through.
-  def comment_params
+  def comment_create_params
+    params.permit(:body, :article_id)
+  end
+
+  def comment_update_params
     params.permit(:body)
   end
 end

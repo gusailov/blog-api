@@ -5,7 +5,7 @@ RSpec.describe CommentUpdateForm do
   let(:article) { create(:article, user: user) }
   let!(:comment) { create(:comment, article: article, user: user) }
 
-  let(:new_body) { FFaker::Lorem.sentences.join(' ') }
+  let(:new_body) { FFaker::Lorem.characters }
 
   let(:attributes) do
     {
@@ -36,7 +36,7 @@ RSpec.describe CommentUpdateForm do
       end
 
       context 'when body is too long' do
-        let(:new_body) { SecureRandom.alphanumeric(1100) }
+        let(:new_body) { FFaker::Lorem.characters(Comment::MAX_BODY_LENGTH + 1) }
         let(:expected_error_messages) { { body: ["is too long (maximum is 1000 characters)"] } }
 
         include_examples 'has validation errors'
