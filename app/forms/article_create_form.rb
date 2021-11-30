@@ -1,5 +1,4 @@
 class ArticleCreateForm < BaseForm
-  #   :title, :body, :category_id, :user_id
   def initialize(params)
     super(params)
 

@@ -19,7 +19,7 @@ class Api::V1::ArticlesController < Api::V1::BaseController
   def create
     authorize Article
 
-    form = ArticleCreateForm.new(article_params.merge({ user_id: current_user.id }).to_unsafe_hash)
+    form = ArticleCreateForm.new(article_params.merge(user_id: current_user.id).to_unsafe_hash)
 
     if form.save
       render json: form.model, status: :created, serializer: ArticleSerializer
