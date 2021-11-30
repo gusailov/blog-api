@@ -1,5 +1,5 @@
 en:
   dry_validation:
     errors:
-      filled?: "can't be blank"
-      max_size?: "is too long (maximum is %{num} characters)"
+      taken: 'has already been taken'
+      unimplemented: 'unimplemented'

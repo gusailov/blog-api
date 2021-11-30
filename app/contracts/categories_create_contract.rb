@@ -4,6 +4,6 @@ class CategoriesCreateContract < ApplicationContract
   end
 
   rule(:name) do
-    key.failure('has already been taken') if Category.exists?(name: value)
+    key.failure(:taken) if Category.exists?(name: value)
   end
 end

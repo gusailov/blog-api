@@ -35,7 +35,7 @@ RSpec.describe ArticleCreateForm do
     describe 'user_id validations' do
       context 'when user_id is empty' do
         let(:user_id) { nil }
-        let(:expected_error_messages) { { user_id: ["can't be blank"] } }
+        let(:expected_error_messages) { { user_id: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
@@ -44,7 +44,7 @@ RSpec.describe ArticleCreateForm do
     describe 'category_id validations' do
       context 'when category_id is empty' do
         let(:category_id) { nil }
-        let(:expected_error_messages) { { category_id: ["can't be blank"] } }
+        let(:expected_error_messages) { { category_id: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
@@ -53,14 +53,14 @@ RSpec.describe ArticleCreateForm do
     describe 'title validations' do
       context 'when title is empty' do
         let(:title) { nil }
-        let(:expected_error_messages) { { title: ["can't be blank"] } }
+        let(:expected_error_messages) { { title: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
 
       context 'when title is too long' do
         let(:title) { FFaker::Lorem.characters(Article::MAX_TITLE_LENGTH + 1) }
-        let(:expected_error_messages) { { title: ["is too long (maximum is 100 characters)"] } }
+        let(:expected_error_messages) { { title: ["size cannot be greater than 100"] } }
 
         include_examples 'has validation errors'
       end
@@ -69,14 +69,14 @@ RSpec.describe ArticleCreateForm do
     describe 'body validations' do
       context 'when body is empty' do
         let(:body) { nil }
-        let(:expected_error_messages) { { body: ["can't be blank"] } }
+        let(:expected_error_messages) { { body: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
 
       context 'when body is too long' do
         let(:body) { FFaker::Lorem.characters(Article::MAX_BODY_LENGTH + 1) }
-        let(:expected_error_messages) { { body: ["is too long (maximum is 50000 characters)"] } }
+        let(:expected_error_messages) { { body: ["size cannot be greater than 50000"] } }
 
         include_examples 'has validation errors'
       end

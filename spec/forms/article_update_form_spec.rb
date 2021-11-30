@@ -38,7 +38,7 @@ RSpec.describe ArticleUpdateForm do
     describe 'category_id validations' do
       context 'when category_id is empty' do
         let(:new_category_id) { '' }
-        let(:expected_error_messages) { { category_id: ["can't be blank"] } }
+        let(:expected_error_messages) { { category_id: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
@@ -47,14 +47,14 @@ RSpec.describe ArticleUpdateForm do
     describe 'title validations' do
       context 'when title is empty' do
         let(:new_title) { '' }
-        let(:expected_error_messages) { { title: ["can't be blank"] } }
+        let(:expected_error_messages) { { title: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
 
       context 'when title is too long' do
         let(:new_title) { FFaker::Lorem.characters(Article::MAX_TITLE_LENGTH + 1) }
-        let(:expected_error_messages) { { title: ["is too long (maximum is 100 characters)"] } }
+        let(:expected_error_messages) { { title: ["size cannot be greater than 100"] } }
 
         include_examples 'has validation errors'
       end
@@ -63,14 +63,14 @@ RSpec.describe ArticleUpdateForm do
     describe 'body validations' do
       context 'when body is empty' do
         let(:new_body) { '' }
-        let(:expected_error_messages) { { body: ["can't be blank"] } }
+        let(:expected_error_messages) { { body: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
 
       context 'when body is too long' do
         let(:new_body) { FFaker::Lorem.characters(Article::MAX_BODY_LENGTH + 1) }
-        let(:expected_error_messages) { { body: ["is too long (maximum is 50000 characters)"] } }
+        let(:expected_error_messages) { { body: ["size cannot be greater than 50000"] } }
 
         include_examples 'has validation errors'
       end

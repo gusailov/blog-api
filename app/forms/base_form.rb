@@ -19,7 +19,7 @@ class BaseForm
 
   def valid?
     result = @contract.call(params)
-    
+
     if result.success?
       @validated_params = result.values.data
       true
@@ -36,6 +36,6 @@ class BaseForm
   private
 
   def persist!
-    raise I18n.t('base_form.exception.unimplemented')
+    raise I18n.t('dry_validation.errors.unimplemented')
   end
 end

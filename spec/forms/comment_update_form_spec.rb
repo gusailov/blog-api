@@ -30,14 +30,14 @@ RSpec.describe CommentUpdateForm do
     describe 'body validations' do
       context 'when body is empty' do
         let(:new_body) { '' }
-        let(:expected_error_messages) { { body: ["can't be blank"] } }
+        let(:expected_error_messages) { { body: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
 
       context 'when body is too long' do
         let(:new_body) { FFaker::Lorem.characters(Comment::MAX_BODY_LENGTH + 1) }
-        let(:expected_error_messages) { { body: ["is too long (maximum is 1000 characters)"] } }
+        let(:expected_error_messages) { { body: ["size cannot be greater than 1000"] } }
 
         include_examples 'has validation errors'
       end

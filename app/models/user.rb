@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
 
   enum role: { admin: 0, user: 1 }
 
-  # TODO: remove validations when you will start using FormObjects
   has_many :comments, dependent: :destroy
   has_many :articles, dependent: :destroy
 end
