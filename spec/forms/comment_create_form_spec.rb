@@ -5,7 +5,7 @@ RSpec.describe CommentCreateForm do
   let(:article) { create(:article, user: user) }
   let(:user_id) { user.id }
   let(:article_id) { article.id }
-  let(:body) { FFaker::Lorem.characters }
+  let(:body) { FFaker::Lorem.sentence }
 
   let(:attributes) do
     {

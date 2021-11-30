@@ -4,6 +4,6 @@ class CategoriesCreateContract < ApplicationContract
   end
 
   rule(:name) do
-    key.failure(:taken) if Category.exists?(name: value)
+    key.failure(I18n.t('dry_validation.errors.taken')) if Category.exists?(name: value)
   end
 end

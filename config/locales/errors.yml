@@ -1,5 +1,0 @@
-en:
-  dry_validation:
-    errors:
-      taken: 'has already been taken'
-      unimplemented: 'unimplemented'

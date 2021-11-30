@@ -8,7 +8,7 @@ RSpec.describe ArticleUpdateForm do
 
   let(:new_category_id) { category_2.id }
   let(:new_title) { FFaker::Book.title }
-  let(:new_body) { FFaker::Lorem.characters }
+  let(:new_body) { FFaker::Lorem.sentence }
 
   let(:attributes) do
     {

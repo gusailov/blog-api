@@ -6,7 +6,7 @@ RSpec.describe ArticleCreateForm do
   let(:user_id) { user.id }
   let(:category_id) { category.id }
   let(:title) { FFaker::Book.title }
-  let(:body) { FFaker::Lorem.characters }
+  let(:body) { FFaker::Lorem.sentence }
 
   let(:attributes) do
     {
