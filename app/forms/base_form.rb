@@ -1,4 +1,6 @@
 class BaseForm
+  attr_reader :model
+  
   def save
     if valid?
       persist!

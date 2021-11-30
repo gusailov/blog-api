@@ -2,7 +2,6 @@ class CategoriesUpdateForm < BaseForm
   include ActiveModel::Model
 
   attr_accessor :name
-  attr_reader :model
 
   validates :name, presence: true
   validate :name_is_unique?

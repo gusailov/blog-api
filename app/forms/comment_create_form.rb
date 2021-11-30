@@ -2,7 +2,6 @@ class CommentCreateForm < BaseForm
   include ActiveModel::Model
 
   attr_accessor :body, :article_id, :user_id
-  attr_reader :model
 
   validates :body, presence: true, length: { maximum: Comment::MAX_BODY_LENGTH }
   validates :article_id, presence: true

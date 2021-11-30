@@ -2,7 +2,6 @@ class CommentUpdateForm < BaseForm
   include ActiveModel::Model
 
   attr_accessor :body
-  attr_reader :model
 
   validates :body, presence: true, length: { maximum: Comment::MAX_BODY_LENGTH }
 

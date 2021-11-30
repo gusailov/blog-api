@@ -2,7 +2,6 @@ class ArticleUpdateForm < BaseForm
   include ActiveModel::Model
 
   attr_accessor :title, :body, :category_id, :article_id
-  attr_reader :model
 
   validates :title, presence: true, length: { maximum: Article::MAX_TITLE_LENGTH }
   validates :body, presence: true, length: { maximum: Article::MAX_BODY_LENGTH }
