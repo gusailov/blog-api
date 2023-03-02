@@ -1,22 +1,17 @@
 class CommentUpdateForm < BaseForm
-  include ActiveModel::Model
-
-  attr_accessor :body
-  attr_reader :model
-
-  validates :body, presence: true, length: { maximum: Comment::MAX_BODY_LENGTH }
-
   def initialize(model, params)
     @model = model
+    model_attributes = model.attributes.symbolize_keys.slice(:body)
 
-    super(@model.attributes.slice('body'))
-    assign_attributes(params.except(:id))
+    super(model_attributes.merge(params))
+
+    @contract = CommentUpdateContract.new
   end
 
   private
 
   def persist!
-    @model.update!(body: body)
+    @model.update!(validated_params)
     @model
   end
 end

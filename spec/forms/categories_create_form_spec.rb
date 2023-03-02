@@ -24,7 +24,7 @@ RSpec.describe CategoriesCreateForm do
     describe 'title validations' do
       context 'when title is empty' do
         let(:name) { nil }
-        let(:expected_error_messages) { { name: ["can't be blank"] } }
+        let(:expected_error_messages) { { name: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end

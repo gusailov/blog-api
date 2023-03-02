@@ -1,21 +1,13 @@
 class CategoriesCreateForm < BaseForm
-  include ActiveModel::Model
+  def initialize(params)
+    super(params)
 
-  attr_accessor :name
-  attr_reader :model
-
-  validates :name, presence: true
-  validate :name_is_unique?
+    @contract = CategoriesCreateContract.new
+  end
 
   private
 
   def persist!
-    @model = Category.create!(name: name)
-  end
-
-  def name_is_unique?
-    if Category.exists?(name: name)
-      errors.add(:name, I18n.t('errors.messages.taken'))
-    end
+    @model = Category.create!(validated_params)
   end
 end

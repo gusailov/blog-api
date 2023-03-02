@@ -1,29 +1,17 @@
 class CategoriesUpdateForm < BaseForm
-  include ActiveModel::Model
-
-  attr_accessor :name
-  attr_reader :model
-
-  validates :name, presence: true
-  validate :name_is_unique?
-
   def initialize(model, params)
     @model = model
+    model_attributes = model.attributes.symbolize_keys.slice(:name)
 
-    super(@model.attributes.slice('name'))
-    assign_attributes(params.except(:id))
+    super(model_attributes.merge(params))
+
+    @contract = CategoriesUpdateContract.new
   end
 
   private
 
   def persist!
-    @model.update!(name: name)
+    @model.update!(validated_params)
     @model
-  end
-
-  def name_is_unique?
-    if Category.exists?(name: name)
-      errors.add(:name, I18n.t('errors.messages.taken'))
-    end
   end
 end

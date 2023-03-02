@@ -1,4 +1,8 @@
 RSpec.describe Category, type: :model do
+  describe 'Constants' do
+    it { expect(described_class::MAX_NAME_LENGTH).to eq(100) }
+  end
+
   describe 'Fields' do
     it { is_expected.to have_db_column(:id).of_type(:integer) }
     it { is_expected.to have_db_column(:name).of_type(:string) }

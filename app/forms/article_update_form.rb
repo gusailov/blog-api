@@ -1,24 +1,19 @@
 class ArticleUpdateForm < BaseForm
-  include ActiveModel::Model
-
-  attr_accessor :title, :body, :category_id, :article_id
-  attr_reader :model
-
-  validates :title, presence: true, length: { maximum: Article::MAX_TITLE_LENGTH }
-  validates :body, presence: true, length: { maximum: Article::MAX_BODY_LENGTH }
-  validates :category_id, presence: true
+  # :title, :body, :category_id, :article_id
 
   def initialize(model, params)
     @model = model
+    model_attributes = model.attributes.symbolize_keys.slice(:title, :body, :category_id, :article_id)
 
-    super(@model.attributes.slice('title', 'body', 'category_id'))
-    assign_attributes(params.except(:id))
+    super(model_attributes.merge(params))
+
+    @contract = ArticleUpdateContract.new
   end
 
   private
 
   def persist!
-    @model.update!(title: title, category_id: category_id, body: body)
+    @model.update!(validated_params)
     @model
   end
 end

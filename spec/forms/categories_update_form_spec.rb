@@ -27,7 +27,7 @@ RSpec.describe CategoriesUpdateForm do
     describe 'name validations' do
       context 'when name is empty' do
         let(:new_name) { '' }
-        let(:expected_error_messages) { { name: ["can't be blank"] } }
+        let(:expected_error_messages) { { name: ["must be filled"] } }
 
         include_examples 'has validation errors'
       end
